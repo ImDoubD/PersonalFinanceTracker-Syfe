@@ -10,49 +10,30 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-//public class SecurityConfig {
-//
-//    @Bean
-//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//        http
-//                .csrf(csrf -> csrf.disable())
-//                .authorizeHttpRequests(auth -> auth
-//                        .requestMatchers("/api/users/register", "/api/users/login").permitAll()
-//                        .anyRequest().authenticated()
-//                )
-//                .formLogin(form -> form
-//                        .loginProcessingUrl("/api/users/login")
-//                        .successHandler((request, response, authentication) -> {
-//                            response.setStatus(200);
-//                        })
-//                        .failureHandler((request, response, exception) -> {
-//                            response.setStatus(401);
-//                        })
-//                )
-//                .logout(logout -> logout
-//                        .logoutUrl("/api/users/logout")
-//                        .logoutSuccessHandler((request, response, authentication) -> {
-//                            response.setStatus(200);
-//                        })
-//                );
-//
-//        return http.build();
-//    }
-//
-//    @Bean
-//    public PasswordEncoder passwordEncoder() {
-//        return new BCryptPasswordEncoder();
-//    }
-//}
-
 public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable()) // Disable CSRF protection
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .anyRequest().permitAll() // Permit all requests
+                        .requestMatchers("/api/users/register", "/api/users/login").permitAll()
+                        .anyRequest().authenticated()
+                )
+                .formLogin(form -> form
+                        .loginProcessingUrl("/api/users/login")
+                        .successHandler((request, response, authentication) -> {
+                            response.setStatus(200);
+                        })
+                        .failureHandler((request, response, exception) -> {
+                            response.setStatus(401);
+                        })
+                )
+                .logout(logout -> logout
+                        .logoutUrl("/api/users/logout")
+                        .logoutSuccessHandler((request, response, authentication) -> {
+                            response.setStatus(200);
+                        })
                 );
 
         return http.build();
@@ -63,3 +44,22 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 }
+
+//public class SecurityConfig {
+//
+//    @Bean
+//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//        http
+//                .csrf(csrf -> csrf.disable()) // Disable CSRF protection
+//                .authorizeHttpRequests(auth -> auth
+//                        .anyRequest().permitAll() // Permit all requests
+//                );
+//
+//        return http.build();
+//    }
+//
+//    @Bean
+//    public PasswordEncoder passwordEncoder() {
+//        return new BCryptPasswordEncoder();
+//    }
+//}
