@@ -17,7 +17,8 @@ This is a personal finance manager system that helps users track their transacti
 
 ## Hitting The End Points
 1. Initially, user needs to hit `http://localhost:6969/api/users/register` and `http://localhost:6969/api/users/login`. To register user needs to provide username, password, totalAmount, name, email.
-2. After registering, user need to login by giving
+2. After registering, user need to login by giving username and password in request body: x-www-form-urlencoded format
+3. Then tart with creating new transactions `http://localhost:6969/api/users/register` , saving goals, custom category
 
 ## Testing
 Run the unit tests using the following command:
